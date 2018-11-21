@@ -22,7 +22,7 @@ server.on("listening", function () {
 });
 
 server.bind({
-    address: 'localhost',
+    address: '0.0.0.0',
     port: 7000,
     exclusive: true
   });
@@ -35,10 +35,10 @@ function line_notify(msg) {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         auth: {
-          bearer: 'dvR6TeBMQlqxEJDcRANBpTi6KyJlFMEWeEd9nTFLTbH', //token
+          bearer: 'dvR6TeBMQlqxEJDcRANBpTi6KyJlFMEWeEd9nTFLTbH', 
         },
         form: {
-          message: msg, //ข้อความที่จะส่ง
+          message: msg,
         },
       }, (err, httpResponse, body) => {
         if (err) {
