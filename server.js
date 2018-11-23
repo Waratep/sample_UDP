@@ -27,6 +27,9 @@ server.bind({
     exclusive: true
   });
 
+checkdata("DHT11,2,25.00,45.00");
+
+
 function line_notify(msg) {
     request({
         method: 'POST',
@@ -50,13 +53,36 @@ function line_notify(msg) {
  } 
 
  function checkdata(msg){
-     var arr = msg.split(',')
-     var name = ['Humidity','Temperature'] 
-     if(arr[0] == "DHT11"){
-         var i = parseInt(arr[1])
-         for(var j = 0 ; j < i; j++){
-            console.log(name[j] + " : " + arr[j+2]);
-            line_notify(name[j] + " : " + arr[j+2]);
-         }
-     }
+    arr = msg.split(',')
+    name_sensor_1 = ['Humidity','Temperature'] 
+    name_sensor_2 = ['Volt','Current'] 
+    name_sensor_3 = ['x','y','z'] 
+
+    if(arr[0] == "DHT11"){
+        var i = parseInt(arr[1])
+        for(var j = 0 ; j < i; j++){
+        console.log(name_sensor_1[j] + " : " + arr[j+2]);
+        line_notify(name_sensor_1[j] + " : " + arr[j+2]);
+        }
+    }else if(arr[0] == "SW"){
+        var i = parseInt(arr[1])
+        for(var j = 0 ; j < i; j++){
+        console.log("SW" + j + " : " + arr[j+2]);
+        line_notify("SW" + j + " : " + arr[j+2]);
+        }        
+    }else if(arr[0] == "Elec"){
+        var i = parseInt(arr[1])
+        for(var j = 0 ; j < i; j++){
+        console.log(name_sensor_2[j] + " : " + arr[j+2]);
+        line_notify(name_sensor_2[j] + " : " + arr[j+2]);
+        }        
+    }else if(arr[0] == "Gyro"){
+        var i = parseInt(arr[1])
+        for(var j = 0 ; j < i; j++){
+        console.log(name_sensor_3[j] + " : " + arr[j+2]);
+        line_notify(name_sensor_3[j] + " : " + arr[j+2]);
+        }         
+    }else{
+
+    }
  }
