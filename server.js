@@ -9,7 +9,7 @@ server.on("error", function (err) {
 
 server.on("message", function (msg, rinfo) {
     console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
-    line_notify(msg);
+    checkdata(msg);
     var ack = new Buffer("Hello ack");
     server.send(ack, 0, ack.length, rinfo.port, rinfo.address, function(err, bytes) {
       console.log("sent ACK.");
@@ -48,3 +48,15 @@ function line_notify(msg) {
         }
       })
  } 
+
+ function checkdata(msg){
+     var arr = msg.split(',')
+     var name = ['Humidity','Temperature'] 
+     if(arr[0] == "DHT11"){
+         var i = parseInt(arr[1])
+         for(var j = 0 ; j < i; j++){
+            console.log(name[j] + " : " + arr[j+2]);
+            line_notify(name[j] + " : " + arr[j+2]);
+         }
+     }
+ }
